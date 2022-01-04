@@ -1,5 +1,5 @@
-# react-draggable
-Create React component which is making another component to draggable without external library
+# Word-Drag-Puzzle
+Create React component which is making another component to draggable without external library. (feat. word drag puzzle game)
 
 ## Available Scripts
 
