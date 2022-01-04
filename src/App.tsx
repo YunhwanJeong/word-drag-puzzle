@@ -1,8 +1,12 @@
 import React from 'react';
+import Puzzle from './Puzzle';
+import './App.css';
 
 function App() {
     return (
-        <div className="App"></div>
+        <div className="app">
+            <Puzzle />
+        </div>
     );
 }
 

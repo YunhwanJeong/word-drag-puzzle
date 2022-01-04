@@ -1,0 +1,5 @@
+.puzzle-box-container {
+    border: 1px solid gray;
+    flex-grow: 1;
+    max-height: 200px;
+}

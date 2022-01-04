@@ -1,0 +1,11 @@
+.puzzle-answer {
+    border: 1px solid gray;
+    flex-grow: 3;
+    max-height: 600px;
+}
+
+.puzzle-answer p {
+    text-align: center;
+    font-size: 2rem;
+    font-weight: 700;
+}
