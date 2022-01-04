@@ -1,8 +1,11 @@
 import React from 'react';
+import './Box.css';
 
-function Box() {
+function Box({character}: {character: string}) {
     return (
-        <div></div>
+        <div className='box'>
+            <span className='box-character'>{character}</span>
+        </div>
     );
 }
 

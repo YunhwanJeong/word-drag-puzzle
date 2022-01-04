@@ -1,5 +1,6 @@
 .puzzle-answer {
     border: 1px solid gray;
+    box-sizing: border-box;
     flex-grow: 3;
     max-height: 600px;
 }
