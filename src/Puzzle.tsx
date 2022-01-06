@@ -5,9 +5,9 @@ import './Puzzle.css';
 
 function Puzzle() {
     return (
-        <div className='puzzle'>
-            <PuzzleAnswer />
-            <PuzzleBoxContainer />
+        <div className="puzzle">
+            <PuzzleAnswer/>
+            <PuzzleBoxContainer/>
         </div>
     );
 }
