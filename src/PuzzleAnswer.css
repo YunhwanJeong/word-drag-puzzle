@@ -1,12 +1,14 @@
 .puzzle-answer {
     border: 1px solid gray;
     box-sizing: border-box;
+    margin-bottom: 80px;
+    min-height: 400px;
     flex-grow: 3;
-    max-height: 600px;
 }
 
 .puzzle-answer p {
     text-align: center;
-    font-size: 2rem;
+    font-size: 1.75rem;
     font-weight: 700;
+    margin: 20px;
 }
