@@ -52,6 +52,7 @@ function Draggable({children}: { children: JSX.Element }) {
     }
 
     function onMouseUp(e: MouseEvent) {
+        if (!state.dragging) return;
         return handleDragEnd(e);
     }
 
