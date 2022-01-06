@@ -1,5 +1,5 @@
 import React from 'react';
-import Puzzle from './Puzzle';
+import Puzzle from './puzzle/Puzzle';
 import './App.css';
 
 function App() {

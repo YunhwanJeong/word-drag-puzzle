@@ -1,8 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import './PuzzleBoxContainer.css';
 import randomWords from 'random-words';
+import {shuffleArray} from '../utils/ArrayUtils';
 import Box from './Box';
-import {shuffleArray} from './Utils';
+import Draggable from '../components/Draggable/Draggable';
 
 function PuzzleBoxContainer() {
     const [characters, setCharacters] = useState<string[]>([]);
@@ -11,9 +12,11 @@ function PuzzleBoxContainer() {
         setCharacters(shuffleArray(randomWords().split('')));
     }, []);
 
-    const boxes = characters.map((c, i) => <Box key={`${c}${i}`} character={c} />);
+    const boxes = characters.map((c, i) => <Draggable key={`${c}${i}`}><Box character={c}/></Draggable>);
     return (
-        <div className='puzzle-box-container'>{boxes}</div>
+        <div className="puzzle-box-container">
+            <div className="puzzle-box-wrapper">{boxes}</div>
+        </div>
     );
 }
 
