@@ -1,38 +1,37 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import './PuzzleBoxContainer.css';
 import randomWords from 'random-words';
 import {shuffleArray} from '../utils/ArrayUtils';
-import Box from './Box';
-import Draggable from '../components/Draggable/Draggable';
+import DraggableBox from './DraggableBox';
 
 function PuzzleBoxContainer() {
     const [characters, setCharacters] = useState<string[]>([]);
-    let draggingElement: HTMLElement | null = null;
+    const draggingElement = useRef<HTMLElement | null>(null);
     useEffect(() => {
         setCharacters(shuffleArray(randomWords().split('')));
     }, []);
 
     function onMouseDown(e: React.MouseEvent) {
         if (e.target instanceof HTMLElement) {
-            draggingElement = e.target;
+            draggingElement.current = e.target;
         }
     }
 
     function onMouseUp(e: React.MouseEvent) {
-        if (draggingElement === null) return;
-        if (e.target instanceof HTMLElement && draggingElement !== e.target) {
+        if (draggingElement.current === null) return;
+        if (e.target instanceof HTMLElement && draggingElement.current !== e.target) {
             const mouseupEvent = new MouseEvent('mouseup', {
                 bubbles: true,
                 cancelable: true,
                 view: window,
             });
-            draggingElement.dispatchEvent(mouseupEvent);
+            draggingElement.current.dispatchEvent(mouseupEvent);
         }
 
-        draggingElement = null;
+        draggingElement.current = null;
     }
 
-    const boxes = characters.map((c, i) => <Draggable key={`${c}${i}`}><Box character={c}/></Draggable>);
+    const boxes = characters.map((c, i) => <DraggableBox key={`${c}${i}`} character={c}/>);
     return (
         <div className="puzzle-box-container">
             <div className="puzzle-box-wrapper" onMouseDown={onMouseDown} onMouseUp={onMouseUp}>{boxes}</div>

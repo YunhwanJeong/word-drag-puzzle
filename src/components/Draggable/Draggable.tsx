@@ -1,18 +1,13 @@
-import React, {useEffect, useState} from 'react';
-import {createCSSTransform, createDraggableData, getControlPosition} from './PositionUtils';
+import React, {useEffect, useRef, useState} from 'react';
+import {calculateTranslatePosition, createCSSTransform, createDraggableData, getControlPosition} from './Utils';
+import {Bounds} from './Types';
 
-export interface DraggableData {
-    x: number;
-    y: number;
+interface Props {
+    children: JSX.Element;
+    nodeRef: React.RefObject<HTMLElement>;
 }
 
-export interface DraggableState {
-    dragging: boolean;
-    x: number;
-    y: number;
-    lastX: number;
-    lastY: number;
-}
+const DEFAULT_BOUNDS = {x: 0, y: 0, width: 0, height: 0};
 
 const DEFAULT_DRAGGABLE_STATE = {
     dragging: false,
@@ -22,13 +17,14 @@ const DEFAULT_DRAGGABLE_STATE = {
     lastY: NaN,
 }
 
-function Draggable({children}: { children: JSX.Element }) {
+function Draggable({children, nodeRef}: Props) {
     const [state, setState] = useState(DEFAULT_DRAGGABLE_STATE);
+    const bounds = useRef<Bounds>(DEFAULT_BOUNDS);
     useEffect(() => {
         function handleDrag(e: MouseEvent) {
             e.preventDefault();
             const {x, y} = getControlPosition(e);
-            const draggableData = createDraggableData(state, x, y);
+            const draggableData = createDraggableData(state, {x, y});
             setState(prevState => Object.assign({}, prevState, {x: draggableData.x, y: draggableData.y}));
         }
 
@@ -36,6 +32,12 @@ function Draggable({children}: { children: JSX.Element }) {
 
         return () => document.removeEventListener('mousemove', handleDrag);
     }, [state.dragging]);
+    useEffect(() => {
+        if (nodeRef.current === null) return;
+        const {x, y, width, height} = nodeRef.current.getBoundingClientRect();
+        bounds.current = {x, y, width, height};
+    }, []);
+
 
     function handleDragStart(e: MouseEvent) {
         const {x, y} = getControlPosition(e);
@@ -56,8 +58,9 @@ function Draggable({children}: { children: JSX.Element }) {
         return handleDragEnd(e);
     }
 
-    const style = createCSSTransform({x: state.x, y: state.y});
-
+    const position = calculateTranslatePosition({x: state.x, y: state.y}, bounds.current);
+    const style = createCSSTransform({x: position.x, y: position.y});
+    console.log('-> render');
     return (
         React.cloneElement(React.Children.only(children), {
             onMouseDown,
