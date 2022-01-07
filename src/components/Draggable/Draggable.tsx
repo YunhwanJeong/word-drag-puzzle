@@ -60,7 +60,6 @@ function Draggable({children, nodeRef}: Props) {
 
     const position = calculateTranslatePosition({x: state.x, y: state.y}, bounds.current);
     const style = createCSSTransform({x: position.x, y: position.y});
-    console.log('-> render');
     return (
         React.cloneElement(React.Children.only(children), {
             onMouseDown,
